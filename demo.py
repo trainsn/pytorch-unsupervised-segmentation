@@ -66,7 +66,7 @@ class MyNet(nn.Module):
 l_pos = args.input.rfind('/') 
 r_pos = args.input.rfind('.')
 output_name = args.input[l_pos+1:r_pos]
-pdb.set_trace()
+#pdb.set_trace()
 im = cv2.imread(args.input)
 data = torch.from_numpy( np.array([im.transpose( (2, 0, 1) ).astype('float32')/255.]) )
 if use_cuda:
