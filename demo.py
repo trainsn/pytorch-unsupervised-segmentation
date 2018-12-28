@@ -11,6 +11,7 @@ import sys
 import numpy as np
 from skimage import segmentation
 import torch.nn.init
+import pdb
 
 use_cuda = torch.cuda.is_available()
 
@@ -62,6 +63,10 @@ class MyNet(nn.Module):
         return x
 
 # load image
+l_pos = args.input.rfind('/') 
+r_pos = args.input.rfind('.')
+output_name = args.input[l_pos+1:r_pos]
+pdb.set_trace()
 im = cv2.imread(args.input)
 data = torch.from_numpy( np.array([im.transpose( (2, 0, 1) ).astype('float32')/255.]) )
 if use_cuda:
@@ -131,4 +136,4 @@ if not args.visualize:
     im_target = target.data.cpu().numpy()
     im_target_rgb = np.array([label_colours[ c % 100 ] for c in im_target])
     im_target_rgb = im_target_rgb.reshape( im.shape ).astype( np.uint8 )
-cv2.imwrite( "output.png", im_target_rgb )
+cv2.imwrite( "res/" + output_name + ".png", im_target_rgb )
