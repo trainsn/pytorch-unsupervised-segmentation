@@ -20,7 +20,7 @@ parser.add_argument('--nChannel', metavar='N', default=100, type=int,
                     help='number of channels')
 parser.add_argument('--maxIter', metavar='T', default=500, type=int,
                     help='number of maximum iterations')
-parser.add_argument('--minLabels', metavar='minL', default=2, type=int, 
+parser.add_argument('--minLabels', metavar='minL', default=3, type=int, 
                     help='minimum number of labels')
 parser.add_argument('--lr', metavar='LR', default=0.1, type=float, 
                     help='learning rate')
@@ -136,7 +136,8 @@ if not args.visualize:
     im_target = target.data.cpu().numpy()
     im_target_rgb = np.array([label_colours[ c % 100 ] for c in im_target])
     im_target_rgb = im_target_rgb.reshape( im.shape ).astype( np.uint8 )
-    im_target = im_target_rgb.reshape( im.shape )
+    im_target = im_target.reshape( im.shape[0:2] )
+   # pdb.set_trace()
     im[np.where(im_target == im_target[0, 0])] = np.array([255, 255, 255])
 cv2.imwrite( "res/" + output_name + ".png", im_target_rgb )
 cv2.imwrite( "mask/" + output_name + ".png", im )
