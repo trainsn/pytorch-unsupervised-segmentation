@@ -18,7 +18,7 @@ use_cuda = torch.cuda.is_available()
 parser = argparse.ArgumentParser(description='PyTorch Unsupervised Segmentation')
 parser.add_argument('--nChannel', metavar='N', default=100, type=int, 
                     help='number of channels')
-parser.add_argument('--maxIter', metavar='T', default=1000, type=int, 
+parser.add_argument('--maxIter', metavar='T', default=500, type=int,
                     help='number of maximum iterations')
 parser.add_argument('--minLabels', metavar='minL', default=2, type=int, 
                     help='minimum number of labels')
@@ -30,7 +30,7 @@ parser.add_argument('--num_superpixels', metavar='K', default=10000, type=int,
                     help='number of superpixels')
 parser.add_argument('--compactness', metavar='C', default=100, type=float, 
                     help='compactness of superpixels')
-parser.add_argument('--visualize', metavar='1 or 0', default=0, type=int, 
+parser.add_argument('--visualize', metavar='1 or 0', default=0, type=int,
                     help='visualization flag')
 parser.add_argument('--input', metavar='FILENAME',
                     help='input image file name', required=True)
@@ -123,7 +123,7 @@ for batch_idx in range(args.maxIter):
     loss.backward()
     optimizer.step()
 
-    print (batch_idx, '/', args.maxIter, ':', nLabels, loss.data[0])
+    print (batch_idx, '/', args.maxIter, ':', nLabels, loss.data)
     if nLabels <= args.minLabels:
         print ("nLabels", nLabels, "reached minLabels", args.minLabels, ".")
         break
@@ -136,4 +136,7 @@ if not args.visualize:
     im_target = target.data.cpu().numpy()
     im_target_rgb = np.array([label_colours[ c % 100 ] for c in im_target])
     im_target_rgb = im_target_rgb.reshape( im.shape ).astype( np.uint8 )
+    im_target = im_target_rgb.reshape( im.shape )
+    im[np.where(im_target == im_target[0, 0])] = np.array([255, 255, 255])
 cv2.imwrite( "res/" + output_name + ".png", im_target_rgb )
+cv2.imwrite( "mask/" + output_name + ".png", im )
