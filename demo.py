@@ -19,7 +19,7 @@ parser.add_argument('--nChannel', metavar='N', default=100, type=int,
                     help='number of channels')
 parser.add_argument('--maxIter', metavar='T', default=1000, type=int, 
                     help='number of maximum iterations')
-parser.add_argument('--minLabels', metavar='minL', default=3, type=int, 
+parser.add_argument('--minLabels', metavar='minL', default=2, type=int, 
                     help='minimum number of labels')
 parser.add_argument('--lr', metavar='LR', default=0.1, type=float, 
                     help='learning rate')
@@ -29,7 +29,7 @@ parser.add_argument('--num_superpixels', metavar='K', default=10000, type=int,
                     help='number of superpixels')
 parser.add_argument('--compactness', metavar='C', default=100, type=float, 
                     help='compactness of superpixels')
-parser.add_argument('--visualize', metavar='1 or 0', default=1, type=int, 
+parser.add_argument('--visualize', metavar='1 or 0', default=0, type=int, 
                     help='visualization flag')
 parser.add_argument('--input', metavar='FILENAME',
                     help='input image file name', required=True)
